@@ -49,6 +49,19 @@ struct Scholarship {
     string applicationStatus;   // "Pending", "Approved", "Rejected"
 };
 
+struct ExamResult {
+    string examID;
+    string studentID;
+    string studentName;
+    double bmMarks;
+    double englishMarks;
+    double mathematicsMarks;
+    double scienceMarks;
+    double sejarahMarks;
+    double averageMarks;
+    char grade;
+};
+
 // Student Account & Student Management
 void studentRegister(vector<Student>& students);
 bool studentLogin(vector<Student>& students, string username, string password, string& loggedInID);
@@ -103,6 +116,23 @@ void adminSubjectMenu(vector<Subject>& subjList, vector<StudentSubject>& enrolLi
 // Payment & Reports
 
 // Exam Result Tracker
+const int TOTAL_SUBJECTS = 5;
+
+void loadExamResultData(vector<ExamResult>& examResults);
+void saveExamResultData(const vector<ExamResult>& examResults);
+
+bool searchExamResult(const vector<ExamResult>& examResults, string studentID, int& foundIndex);
+double calculateAverage(const double marks[], int totalSubjects);
+char calculateGrade(double averageMark);
+
+bool insertExamResult(vector<ExamResult>& examResults, string studentID, string studentName);
+bool updateExamResult(vector<ExamResult>& examResults, string studentID);
+bool deleteExamResult(vector<ExamResult>& examResults, string studentID);
+void displayExamResult(const vector<ExamResult>& examResults, string studentID);
+void generateResultReport(const vector<ExamResult>& examResults);
+
+void studentExamMenu(string studentID, const vector<ExamResult>& examResults);
+void adminExamMenu(vector<ExamResult>& examResults, const vector<Student>& students);
 
 // Scholarship/Discount Eligibility
 void loadScholarshipData(vector<Scholarship>& scholarships);
