@@ -6,11 +6,13 @@ void extendedMainMenu()
     vector<Subject> subjectList;
     vector<StudentSubject> enrolRecords;
     vector<Scholarship> scholarshipList;
+    vector<ExamResult> examResultList;
 
     loadStudentData(students);
     loadSubjectFromFile(subjectList);
     loadEnrolFromFile(enrolRecords);
     loadScholarshipData(scholarshipList);
+    loadExamResultData(examResultList);
 
     if (subjectList.empty())
     {
@@ -109,8 +111,7 @@ void extendedMainMenu()
                                 break;
 
                             case 5:
-                                // Exam Result Tracker
-                                cout << "belum siap\n";
+                                studentExamMenu(loggedID, examResultList);
                                 break;
 
                             case 6:
@@ -189,8 +190,7 @@ void extendedMainMenu()
                         break;
 
                     case 5:
-                        // Exam Result Tracker
-                        cout << "belum siap\n";
+                        adminExamMenu(examResultList, students);
                         break;
 
                     case 6:
@@ -214,6 +214,7 @@ void extendedMainMenu()
             saveSubjectToFile(subjectList);
             saveEnrolToFile(enrolRecords);
             saveScholarshipData(scholarshipList);
+            saveExamResultData(examResultList);
             cout << "Exiting.\n";
         }
     } while (choice != 0);
