@@ -113,6 +113,45 @@ void adminSubjectMenu(vector<Subject>& subjList, vector<StudentSubject>& enrolLi
 
 // Schedule Management
 
+struct Schedule
+{
+    string studentID;
+    string subjectCode;
+    string teacherName;
+    string classroom;
+    string day;
+    string time;
+};
+
+// File Processing
+void loadScheduleData(vector<Schedule>& schedules);
+void saveScheduleData(const vector<Schedule>& schedules);
+
+// Admin Functions
+bool createSchedule(Schedule& schedule, vector<Schedule>& schedules);
+bool updateSchedule(Schedule& schedule, vector<Schedule>& schedules);
+bool searchSchedule(string subjectCode, const vector<Schedule>& schedules);
+
+bool assignTeacher(Schedule& schedule,
+    string teacherName,
+    const vector<Schedule>& schedules);
+
+bool assignClassroom(Schedule& schedule,
+    string classroom,
+    const vector<Schedule>& schedules);
+
+void displaySchedule(const vector<Schedule>& schedules);
+
+// Student Function
+void viewSchedule(string studentID,
+    const vector<Schedule>& schedules);
+
+// Menus
+void studentScheduleMenu(string studentID,
+    const vector<Schedule>& schedules);
+
+void adminScheduleMenu(vector<Schedule>& schedules);
+
 // Payment & Reports
 
 // Exam Result Tracker
