@@ -101,8 +101,7 @@ void extendedMainMenu()
                                 break;
 
                             case 3:
-                                // Schedule Management
-                                cout << "belum siap\n";
+                                studentScheduleMenu(loggedID, scheduleList);
                                 break;
 
                             case 4:
@@ -180,8 +179,7 @@ void extendedMainMenu()
                         break;
 
                     case 3:
-                        // Schedule Management
-                        cout << "belum siap\n";
+                        adminScheduleMenu(scheduleList);
                         break;
 
                     case 4:
