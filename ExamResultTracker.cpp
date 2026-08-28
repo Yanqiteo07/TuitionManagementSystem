@@ -122,11 +122,11 @@ bool insertExamResult(vector<ExamResult>& examResults, string studentID, string 
     newResult.studentName = studentName;
 
     cout << "\n----- Insert Exam Marks for " << studentName << " (" << studentID << ") -----\n";
-    newResult.bmMarks          = readSubjectMark("Bahasa Melayu");
-    newResult.englishMarks     = readSubjectMark("English");
+    newResult.bmMarks = readSubjectMark("Bahasa Melayu");
+    newResult.englishMarks = readSubjectMark("English");
     newResult.mathematicsMarks = readSubjectMark("Mathematics");
-    newResult.scienceMarks     = readSubjectMark("Science");
-    newResult.sejarahMarks     = readSubjectMark("Sejarah");
+    newResult.scienceMarks = readSubjectMark("Science");
+    newResult.sejarahMarks = readSubjectMark("Sejarah");
 
     double marks[TOTAL_SUBJECTS] = {
         newResult.bmMarks, newResult.englishMarks, newResult.mathematicsMarks,
@@ -141,8 +141,8 @@ bool insertExamResult(vector<ExamResult>& examResults, string studentID, string 
 
     cout << "\nExamination record added successfully.\n";
     cout << "Exam ID: " << newResult.examID
-         << " | Average: " << fixed << setprecision(2) << newResult.averageMarks
-         << " | Grade: " << newResult.grade << "\n";
+        << " | Average: " << fixed << setprecision(2) << newResult.averageMarks
+        << " | Grade: " << newResult.grade << "\n";
 
     return true;
 }
@@ -160,11 +160,11 @@ bool updateExamResult(vector<ExamResult>& examResults, string studentID)
     cout << "\n----- Update Exam Marks for " << r.studentName << " (" << studentID << ") -----\n";
     cout << "Re-enter all 5 subject marks below.\n";
 
-    r.bmMarks          = readSubjectMark("Bahasa Melayu");
-    r.englishMarks     = readSubjectMark("English");
+    r.bmMarks = readSubjectMark("Bahasa Melayu");
+    r.englishMarks = readSubjectMark("English");
     r.mathematicsMarks = readSubjectMark("Mathematics");
-    r.scienceMarks      = readSubjectMark("Science");
-    r.sejarahMarks     = readSubjectMark("Sejarah");
+    r.scienceMarks = readSubjectMark("Science");
+    r.sejarahMarks = readSubjectMark("Sejarah");
 
     double marks[TOTAL_SUBJECTS] = {
         r.bmMarks, r.englishMarks, r.mathematicsMarks, r.scienceMarks, r.sejarahMarks
@@ -175,7 +175,7 @@ bool updateExamResult(vector<ExamResult>& examResults, string studentID)
 
     cout << "\nExamination record updated successfully.\n";
     cout << "New Average: " << fixed << setprecision(2) << r.averageMarks
-         << " | New Grade: " << r.grade << "\n";
+        << " | New Grade: " << r.grade << "\n";
 
     return true;
 }
@@ -190,7 +190,7 @@ bool deleteExamResult(vector<ExamResult>& examResults, string studentID)
     }
 
     cout << "Are you sure you want to delete the exam record for "
-         << examResults[idx].studentName << " (" << studentID << ")? (Y/N): ";
+        << examResults[idx].studentName << " (" << studentID << ")? (Y/N): ";
     char confirm;
     cin >> confirm;
     clearInputBuffer();
@@ -242,46 +242,46 @@ void generateResultReport(const vector<ExamResult>& examResults)
 
     cout << "\n================= STUDENT RESULT REPORT =================\n";
     cout << left
-         << setw(10) << "ExamID"
-         << setw(12) << "StudentID"
-         << setw(18) << "Name"
-         << setw(10) << "Average"
-         << setw(6)  << "Grade" << "\n";
+        << setw(10) << "ExamID"
+        << setw(12) << "StudentID"
+        << setw(18) << "Name"
+        << setw(10) << "Average"
+        << setw(6) << "Grade" << "\n";
     cout << string(56, '-') << "\n";
 
     double totalOfAverages = 0.0;
-    int gradeCount[5] = {0, 0, 0, 0, 0}; // A B C D F
+    int gradeCount[5] = { 0, 0, 0, 0, 0 }; // A B C D F
 
     for (const auto& r : examResults)
     {
         cout << left
-             << setw(10) << r.examID
-             << setw(12) << r.studentID
-             << setw(18) << r.studentName
-             << setw(10) << fixed << setprecision(2) << r.averageMarks
-             << setw(6)  << r.grade << "\n";
+            << setw(10) << r.examID
+            << setw(12) << r.studentID
+            << setw(18) << r.studentName
+            << setw(10) << fixed << setprecision(2) << r.averageMarks
+            << setw(6) << r.grade << "\n";
 
         totalOfAverages += r.averageMarks;
 
         switch (r.grade)
         {
-            case 'A': gradeCount[0]++; break;
-            case 'B': gradeCount[1]++; break;
-            case 'C': gradeCount[2]++; break;
-            case 'D': gradeCount[3]++; break;
-            default:  gradeCount[4]++; break;
+        case 'A': gradeCount[0]++; break;
+        case 'B': gradeCount[1]++; break;
+        case 'C': gradeCount[2]++; break;
+        case 'D': gradeCount[3]++; break;
+        default:  gradeCount[4]++; break;
         }
     }
 
     cout << string(56, '-') << "\n";
     cout << "Total Students: " << examResults.size() << "\n";
     cout << "Class Average: " << fixed << setprecision(2)
-         << (totalOfAverages / examResults.size()) << "\n";
+        << (totalOfAverages / examResults.size()) << "\n";
     cout << "Grade Distribution -> A:" << gradeCount[0]
-         << "  B:" << gradeCount[1]
-         << "  C:" << gradeCount[2]
-         << "  D:" << gradeCount[3]
-         << "  F:" << gradeCount[4] << "\n";
+        << "  B:" << gradeCount[1]
+        << "  C:" << gradeCount[2]
+        << "  D:" << gradeCount[3]
+        << "  F:" << gradeCount[4] << "\n";
     cout << "===========================================================\n";
 }
 
@@ -317,12 +317,18 @@ void loadExamResultData(vector<ExamResult>& examResults)
         getline(ss, avgStr, '|');
         getline(ss, gradeStr, '|');
 
-        try { r.bmMarks          = stod(bmStr); }   catch (...) { r.bmMarks = 0; }
-        try { r.englishMarks     = stod(engStr); }  catch (...) { r.englishMarks = 0; }
-        try { r.mathematicsMarks = stod(mathStr); } catch (...) { r.mathematicsMarks = 0; }
-        try { r.scienceMarks     = stod(sciStr); }  catch (...) { r.scienceMarks = 0; }
-        try { r.sejarahMarks     = stod(sejStr); }  catch (...) { r.sejarahMarks = 0; }
-        try { r.averageMarks     = stod(avgStr); }  catch (...) { r.averageMarks = 0; }
+        try { r.bmMarks = stod(bmStr); }
+        catch (...) { r.bmMarks = 0; }
+        try { r.englishMarks = stod(engStr); }
+        catch (...) { r.englishMarks = 0; }
+        try { r.mathematicsMarks = stod(mathStr); }
+        catch (...) { r.mathematicsMarks = 0; }
+        try { r.scienceMarks = stod(sciStr); }
+        catch (...) { r.scienceMarks = 0; }
+        try { r.sejarahMarks = stod(sejStr); }
+        catch (...) { r.sejarahMarks = 0; }
+        try { r.averageMarks = stod(avgStr); }
+        catch (...) { r.averageMarks = 0; }
         r.grade = gradeStr.empty() ? 'F' : gradeStr[0];
 
         examResults.push_back(r);
@@ -342,10 +348,10 @@ void saveExamResultData(const vector<ExamResult>& examResults)
     for (const auto& r : examResults)
     {
         outFile << r.examID << "|" << r.studentID << "|" << r.studentName << "|"
-                << fixed << setprecision(2)
-                << r.bmMarks << "|" << r.englishMarks << "|" << r.mathematicsMarks << "|"
-                << r.scienceMarks << "|" << r.sejarahMarks << "|" << r.averageMarks << "|"
-                << r.grade << "\n";
+            << fixed << setprecision(2)
+            << r.bmMarks << "|" << r.englishMarks << "|" << r.mathematicsMarks << "|"
+            << r.scienceMarks << "|" << r.sejarahMarks << "|" << r.averageMarks << "|"
+            << r.grade << "\n";
     }
     outFile.close();
 }
@@ -363,53 +369,47 @@ void studentExamMenu(string studentID, const vector<ExamResult>& examResults)
         cout << "0. Back to Student Menu\n";
         cout << "Enter your choice: ";
 
-        if (!(cin >> choice))
-        {
-            cout << "Invalid input.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+        choice = readMenuChoice(0, 3);
 
         int idx;
         switch (choice)
         {
-            case 1:
-                displayExamResult(examResults, studentID);
-                break;
-            case 2:
-                if (searchExamResult(examResults, studentID, idx))
-                {
-                    const ExamResult& r = examResults[idx];
-                    cout << "\n----- Subject Marks -----\n";
-                    cout << left << setw(16) << "Bahasa Melayu:" << fixed << setprecision(2) << r.bmMarks << "\n";
-                    cout << left << setw(16) << "English:" << r.englishMarks << "\n";
-                    cout << left << setw(16) << "Mathematics:" << r.mathematicsMarks << "\n";
-                    cout << left << setw(16) << "Science:" << r.scienceMarks << "\n";
-                    cout << left << setw(16) << "Sejarah:" << r.sejarahMarks << "\n";
-                }
-                else
-                {
-                    cout << "No exam record found. Please check back after results are released.\n";
-                }
-                break;
-            case 3:
-                if (searchExamResult(examResults, studentID, idx))
-                {
-                    cout << "\nYour Average Marks: " << fixed << setprecision(2)
-                         << examResults[idx].averageMarks
-                         << " (Grade " << examResults[idx].grade << ")\n";
-                }
-                else
-                {
-                    cout << "No exam record found. Please check back after results are released.\n";
-                }
-                break;
-            case 0:
-                cout << "Returning to Student Menu...\n";
-                break;
-            default:
-                cout << "Invalid menu choice. Please try again.\n";
+        case 1:
+            displayExamResult(examResults, studentID);
+            break;
+        case 2:
+            if (searchExamResult(examResults, studentID, idx))
+            {
+                const ExamResult& r = examResults[idx];
+                cout << "\n----- Subject Marks -----\n";
+                cout << left << setw(16) << "Bahasa Melayu:" << fixed << setprecision(2) << r.bmMarks << "\n";
+                cout << left << setw(16) << "English:" << r.englishMarks << "\n";
+                cout << left << setw(16) << "Mathematics:" << r.mathematicsMarks << "\n";
+                cout << left << setw(16) << "Science:" << r.scienceMarks << "\n";
+                cout << left << setw(16) << "Sejarah:" << r.sejarahMarks << "\n";
+            }
+            else
+            {
+                cout << "No exam record found. Please check back after results are released.\n";
+            }
+            break;
+        case 3:
+            if (searchExamResult(examResults, studentID, idx))
+            {
+                cout << "\nYour Average Marks: " << fixed << setprecision(2)
+                    << examResults[idx].averageMarks
+                    << " (Grade " << examResults[idx].grade << ")\n";
+            }
+            else
+            {
+                cout << "No exam record found. Please check back after results are released.\n";
+            }
+            break;
+        case 0:
+            cout << "Returning to Student Menu...\n";
+            break;
+        default:
+            cout << "Invalid menu choice. Please try again.\n";
         }
     } while (choice != 0);
 }
@@ -428,57 +428,51 @@ void adminExamMenu(vector<ExamResult>& examResults, const vector<Student>& stude
         cout << "0. Back to Admin Menu\n";
         cout << "Enter your choice: ";
 
-        if (!(cin >> choice))
-        {
-            cout << "Invalid input.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+        choice = readMenuChoice(0, 5);
 
         switch (choice)
         {
-            case 1:
+        case 1:
+        {
+            string id = readNonEmptyLine("Enter Student ID: ");
+            int sIdx;
+            if (!searchStudent(students, id, sIdx))
             {
-                string id = readNonEmptyLine("Enter Student ID: ");
-                int sIdx;
-                if (!searchStudent(students, id, sIdx))
-                {
-                    cout << "Error: Student ID not found in Student Management records.\n";
-                    break;
-                }
-                insertExamResult(examResults, id, students[sIdx].name);
-                saveExamResultData(examResults);
+                cout << "Error: Student ID not found in Student Management records.\n";
                 break;
             }
-            case 2:
-            {
-                string id = readNonEmptyLine("Enter Student ID: ");
-                updateExamResult(examResults, id);
-                saveExamResultData(examResults);
-                break;
-            }
-            case 3:
-            {
-                string id = readNonEmptyLine("Enter Student ID: ");
-                deleteExamResult(examResults, id);
-                saveExamResultData(examResults);
-                break;
-            }
-            case 4:
-            {
-                string id = readNonEmptyLine("Enter Student ID: ");
-                displayExamResult(examResults, id);
-                break;
-            }
-            case 5:
-                generateResultReport(examResults);
-                break;
-            case 0:
-                cout << "Returning to Admin Menu...\n";
-                break;
-            default:
-                cout << "Invalid menu choice. Please try again.\n";
+            insertExamResult(examResults, id, students[sIdx].name);
+            saveExamResultData(examResults);
+            break;
+        }
+        case 2:
+        {
+            string id = readNonEmptyLine("Enter Student ID: ");
+            updateExamResult(examResults, id);
+            saveExamResultData(examResults);
+            break;
+        }
+        case 3:
+        {
+            string id = readNonEmptyLine("Enter Student ID: ");
+            deleteExamResult(examResults, id);
+            saveExamResultData(examResults);
+            break;
+        }
+        case 4:
+        {
+            string id = readNonEmptyLine("Enter Student ID: ");
+            displayExamResult(examResults, id);
+            break;
+        }
+        case 5:
+            generateResultReport(examResults);
+            break;
+        case 0:
+            cout << "Returning to Admin Menu...\n";
+            break;
+        default:
+            cout << "Invalid menu choice. Please try again.\n";
         }
     } while (choice != 0);
 }
