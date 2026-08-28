@@ -84,6 +84,7 @@ bool studentIDExists(const vector<Student>& students, const string& studentID);
 string generateStudentID(const vector<Student>& students);
 void clearInputBuffer();
 string readNonEmptyLine(const string& prompt);
+int readMenuChoice(int min, int max);
 
 //void studentMenu(vector<Student>& students); un use
 //void mainMenu(); un use
