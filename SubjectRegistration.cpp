@@ -341,13 +341,8 @@ void studentSubjectMenu(string studentID, vector<Subject>& subjList, vector<Stud
         cout << "4. View registered subjects & fee" << endl;
         cout << "0. Back to student profile menu" << endl;
         cout << "Enter your choice: ";
-        if (!(cin >> choice))
-        {
-            cout << "Invalid input.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+
+        choice = readMenuChoice(0, 4);
 
         switch(choice)
         {
@@ -358,6 +353,7 @@ void studentSubjectMenu(string studentID, vector<Subject>& subjList, vector<Stud
                 string code;
                 cout << "Enter Subject Code to Register: ";
                 cin >> code;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 registerSubject(studentID, code, subjList, enrolList);
                 break;
             }
@@ -365,6 +361,7 @@ void studentSubjectMenu(string studentID, vector<Subject>& subjList, vector<Stud
                 string code;
                 cout << "Enter subject code to drop: ";
                 cin >> code;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 dropSubject(studentID, code, enrolList);
                 break;
             }
@@ -393,13 +390,9 @@ void adminSubjectMenu(vector<Subject>& subjList, vector<StudentSubject>& enrolLi
         cout << "5. View all student registration records" << endl;
         cout << "0. Back to admin menu" << endl;
         cout << "Enter option: ";
-        if (!(cin >> opt))
-        {
-            cout << "Invalid input.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+
+        opt = readMenuChoice(0, 5);
+        
         switch(opt)
         {
             case 1:
@@ -409,6 +402,7 @@ void adminSubjectMenu(vector<Subject>& subjList, vector<StudentSubject>& enrolLi
                 string c;
                 cout << "Enter subject code to edit: ";
                 cin >> c;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 editSubject(subjList, c);
                 break;
             }
@@ -416,6 +410,7 @@ void adminSubjectMenu(vector<Subject>& subjList, vector<StudentSubject>& enrolLi
                 string c;
                 cout << "Enter subject code to delete: ";
                 cin >> c;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 deleteSubject(subjList, c, enrolList);
                 break;
             }
