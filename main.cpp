@@ -6,12 +6,14 @@ void extendedMainMenu()
     vector<Subject> subjectList;
     vector<StudentSubject> enrolRecords;
     vector<Scholarship> scholarshipList;
+    vector<Schedule> scheduleList;
     vector<ExamResult> examResultList;
 
     loadStudentData(students);
     loadSubjectFromFile(subjectList);
     loadEnrolFromFile(enrolRecords);
     loadScholarshipData(scholarshipList);
+    loadScheduleData(scheduleList);
     loadExamResultData(examResultList);
 
     if (subjectList.empty())
@@ -27,6 +29,7 @@ void extendedMainMenu()
 
 
     int choice;
+
     do
     {
         cout << "\n===================================\n";
@@ -37,25 +40,21 @@ void extendedMainMenu()
         cout << "0. Exit\n";
         cout << "Enter your choice: ";
 
-        if (!(cin >> choice))
-        {
-            cout << "Invalid input. Please enter a number.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+        choice = readMenuChoice(0, 2);
 
         if (choice == 1)
         {
             int stuOpt;
-            do {
+            do
+            {
                 cout << "\n----------- STUDENT MENU -----------\n";
                 cout << "1. Register\n";
                 cout << "2. Login\n";
                 cout << "0. Back to Main Menu\n";
                 cout << "Enter your choice: ";
-                if (!(cin >> stuOpt)) { clearInputBuffer(); continue; }
-                clearInputBuffer();
+
+                stuOpt = readMenuChoice(0, 2);
+
                 if (stuOpt == 1) {
                     studentRegister(students);
                     saveStudentData(students);
@@ -82,13 +81,7 @@ void extendedMainMenu()
                             cout << "0. Logout\n";
                             cout << "Enter your choice: ";
 
-                            if (!(cin >> stuMainOpt))
-                            {
-                                cout << "Invalid input.\n";
-                                clearInputBuffer();
-                                continue;
-                            }
-                            clearInputBuffer();
+                            stuMainOpt = readMenuChoice(0, 6);
 
                             switch (stuMainOpt)
                             {
@@ -160,13 +153,7 @@ void extendedMainMenu()
                     cout << "0. Logout\n";
                     cout << "Enter your choice: ";
 
-                    if (!(cin >> adminTopOpt))
-                    {
-                        cout << "Invalid input.\n";
-                        clearInputBuffer();
-                        continue;
-                    }
-                    clearInputBuffer();
+                    adminTopOpt = readMenuChoice(0, 6);
 
                     switch (adminTopOpt)
                     {
@@ -212,7 +199,7 @@ void extendedMainMenu()
             saveSubjectToFile(subjectList);
             saveEnrolToFile(enrolRecords);
             saveScholarshipData(scholarshipList);
-            saveExamResultData(examResultList);
+            saveScheduleData(scheduleList);
             cout << "Exiting.\n";
         }
     } while (choice != 0);
