@@ -16,9 +16,9 @@
 
 // ================= Scholarship Criteria (admin-adjustable) =================
 // Defaults match the report: >85 average -> 25% scholarship, +5% sibling discount
-static double minAverageMark        = 85.0;
-static double scholarshipDiscount   = 0.25;
-static double siblingDiscount       = 0.05;
+static double minAverageMark = 85.0;
+static double scholarshipDiscount = 0.25;
+static double siblingDiscount = 0.05;
 
 const string SCHOLARSHIP_FILE = "scholarship.txt";
 
@@ -64,9 +64,12 @@ void loadScholarshipData(vector<Scholarship>& scholarships)
         getline(ss, discStr, '|');
         getline(ss, s.applicationStatus, '|');
 
-        try { s.averageMark  = stod(avgStr); }  catch (...) { s.averageMark  = 0.0; }
-        try { s.isSibling    = (stoi(sibStr) == 1); } catch (...) { s.isSibling = false; }
-        try { s.discountRate = stod(discStr); } catch (...) { s.discountRate = 0.0; }
+        try { s.averageMark = stod(avgStr); }
+        catch (...) { s.averageMark = 0.0; }
+        try { s.isSibling = (stoi(sibStr) == 1); }
+        catch (...) { s.isSibling = false; }
+        try { s.discountRate = stod(discStr); }
+        catch (...) { s.discountRate = 0.0; }
 
         scholarships.push_back(s);
     }
@@ -85,10 +88,10 @@ void saveScholarshipData(const vector<Scholarship>& scholarships)
     for (const auto& s : scholarships)
     {
         outFile << s.studentID << "|"
-                << fixed << setprecision(2) << s.averageMark << "|"
-                << (s.isSibling ? 1 : 0) << "|"
-                << fixed << setprecision(4) << s.discountRate << "|"
-                << s.applicationStatus << "\n";
+            << fixed << setprecision(2) << s.averageMark << "|"
+            << (s.isSibling ? 1 : 0) << "|"
+            << fixed << setprecision(4) << s.discountRate << "|"
+            << s.applicationStatus << "\n";
     }
     outFile.close();
 }
@@ -135,7 +138,7 @@ bool applyScholarship(vector<Scholarship>& scholarships, string studentID)
             scholarships[idx].applicationStatus == "Approved")
         {
             cout << "Error: You already have a " << scholarships[idx].applicationStatus
-                 << " scholarship application.\n";
+                << " scholarship application.\n";
             return false;
         }
         // Previously "Rejected" - allow the student to re-apply below, overwriting the record.
@@ -159,18 +162,35 @@ bool applyScholarship(vector<Scholarship>& scholarships, string studentID)
     if (averageMark < minAverageMark)
     {
         cout << "Sorry, your average mark does not meet the minimum requirement ("
-             << minAverageMark << "). Application not submitted.\n";
+            << minAverageMark << "). Application not submitted.\n";
         return false;
     }
 
     char sibChoice;
-    cout << "Do you have a sibling currently enrolled? (Y/N): ";
-    cin >> sibChoice;
-    clearInputBuffer();
-    bool isSibling = (toupper(sibChoice) == 'Y');
 
+    while (true)
+    {
+        cout << "Do you have a sibling currently enrolled? (Y/N): ";
+
+        if (!(cin >> sibChoice))
+        {
+            clearInputBuffer();
+            cout << "Invalid input. Please enter Y or N.\n";
+            continue;
+        }
+
+        clearInputBuffer();
+
+        sibChoice = toupper(sibChoice);
+
+        if (sibChoice == 'Y' || sibChoice == 'N')
+            break;
+
+        cout << "Invalid input. Please enter Y or N.\n";
+    }
+
+    bool isSibling = (sibChoice == 'Y');
     double discount = calculateDiscount(averageMark, isSibling);
-
     if (idx != -1)
     {
         // Overwrite the previous (rejected) record
@@ -224,9 +244,9 @@ double viewTuitionFeeDiscount(const vector<Scholarship>& scholarships, string st
 // ================= Admin Functions =================
 void setScholarshipCriteria(double newMinAverageMark, double newScholarshipDiscount, double newSiblingDiscount)
 {
-    minAverageMark      = newMinAverageMark;
+    minAverageMark = newMinAverageMark;
     scholarshipDiscount = newScholarshipDiscount;
-    siblingDiscount     = newSiblingDiscount;
+    siblingDiscount = newSiblingDiscount;
     cout << "Scholarship criteria updated successfully.\n";
 }
 
@@ -306,7 +326,7 @@ void updateScholarshipInformation(vector<Scholarship>& scholarships, string stud
     }
 
     cout << "Current Sibling Status: " << (s.isSibling ? "Yes" : "No")
-         << "\nUpdate sibling status? (Y/N, or blank to keep): ";
+        << "\nUpdate sibling status? (Y/N, or blank to keep): ";
     getline(cin, input);
     if (!input.empty())
     {
@@ -320,7 +340,7 @@ void updateScholarshipInformation(vector<Scholarship>& scholarships, string stud
     s.discountRate = calculateDiscount(s.averageMark, s.isSibling);
 
     cout << "Scholarship record updated. New discount rate: "
-         << fixed << setprecision(2) << (s.discountRate * 100) << "%\n";
+        << fixed << setprecision(2) << (s.discountRate * 100) << "%\n";
 
     saveScholarshipData(scholarships);
 }
@@ -335,11 +355,11 @@ void generateScholarshipReport(const vector<Scholarship>& scholarships)
 
     cout << "\n========== SCHOLARSHIP / DISCOUNT REPORT ==========\n";
     cout << left
-         << setw(12) << "StudentID"
-         << setw(14) << "AvgMark"
-         << setw(10) << "Sibling"
-         << setw(12) << "Discount"
-         << setw(12) << "Status" << "\n";
+        << setw(12) << "StudentID"
+        << setw(14) << "AvgMark"
+        << setw(10) << "Sibling"
+        << setw(12) << "Discount"
+        << setw(12) << "Status" << "\n";
     cout << string(60, '-') << "\n";
 
     int eligibleCount = 0;
@@ -348,11 +368,11 @@ void generateScholarshipReport(const vector<Scholarship>& scholarships)
     for (const auto& s : scholarships)
     {
         cout << left
-             << setw(12) << s.studentID
-             << setw(14) << fixed << setprecision(2) << s.averageMark
-             << setw(10) << (s.isSibling ? "Yes" : "No")
-             << setw(12) << (to_string(static_cast<int>(s.discountRate * 100)) + "%")
-             << setw(12) << s.applicationStatus << "\n";
+            << setw(12) << s.studentID
+            << setw(14) << fixed << setprecision(2) << s.averageMark
+            << setw(10) << (s.isSibling ? "Yes" : "No")
+            << setw(12) << (to_string(static_cast<int>(s.discountRate * 100)) + "%")
+            << setw(12) << s.applicationStatus << "\n";
 
         if (s.averageMark >= minAverageMark) eligibleCount++;
         if (s.applicationStatus == "Approved") approvedCount++;
@@ -378,40 +398,34 @@ void studentScholarshipMenu(string studentID, vector<Scholarship>& scholarships)
         cout << "0. Back to Student Menu\n";
         cout << "Enter your choice: ";
 
-        if (!(cin >> choice))
-        {
-            cout << "Invalid input.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+        choice = readMenuChoice(0, 3);
 
         switch (choice)
         {
-            case 1:
+        case 1:
+        {
+            double avgMark;
+            cout << "Enter your average mark (0-100) to check eligibility: ";
+            while (!(cin >> avgMark) || avgMark < 0 || avgMark > 100)
             {
-                double avgMark;
-                cout << "Enter your average mark (0-100) to check eligibility: ";
-                while (!(cin >> avgMark) || avgMark < 0 || avgMark > 100)
-                {
-                    cout << "Invalid input. Enter a value between 0 and 100: ";
-                    clearInputBuffer();
-                }
+                cout << "Invalid input. Enter a value between 0 and 100: ";
                 clearInputBuffer();
-                viewScholarshipEligibility(studentID, avgMark);
-                break;
             }
-            case 2:
-                applyScholarship(scholarships, studentID);
-                break;
-            case 3:
-                viewTuitionFeeDiscount(scholarships, studentID);
-                break;
-            case 0:
-                cout << "Returning to Student Menu...\n";
-                break;
-            default:
-                cout << "Invalid menu choice. Please try again.\n";
+            clearInputBuffer();
+            viewScholarshipEligibility(studentID, avgMark);
+            break;
+        }
+        case 2:
+            applyScholarship(scholarships, studentID);
+            break;
+        case 3:
+            viewTuitionFeeDiscount(scholarships, studentID);
+            break;
+        case 0:
+            cout << "Returning to Student Menu...\n";
+            break;
+        default:
+            cout << "Invalid menu choice. Please try again.\n";
         }
     } while (choice != 0);
 }
@@ -429,66 +443,60 @@ void adminScholarshipMenu(vector<Scholarship>& scholarships)
         cout << "0. Back to Admin Menu\n";
         cout << "Enter your choice: ";
 
-        if (!(cin >> choice))
-        {
-            cout << "Invalid input.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+        choice = readMenuChoice(0, 4);
 
         switch (choice)
         {
-            case 1:
+        case 1:
+        {
+            double newMin, newSchoDisc, newSibDisc;
+            cout << "Enter minimum average mark (0-100): ";
+            while (!(cin >> newMin) || newMin < 0 || newMin > 100)
             {
-                double newMin, newSchoDisc, newSibDisc;
-                cout << "Enter minimum average mark (0-100): ";
-                while (!(cin >> newMin) || newMin < 0 || newMin > 100)
-                {
-                    cout << "Invalid input. Enter a value between 0 and 100: ";
-                    clearInputBuffer();
-                }
+                cout << "Invalid input. Enter a value between 0 and 100: ";
                 clearInputBuffer();
-
-                cout << "Enter scholarship discount percentage (0-100): ";
-                while (!(cin >> newSchoDisc) || newSchoDisc < 0 || newSchoDisc > 100)
-                {
-                    cout << "Invalid input. Enter a value between 0 and 100: ";
-                    clearInputBuffer();
-                }
-                clearInputBuffer();
-
-                cout << "Enter sibling discount percentage (0-100): ";
-                while (!(cin >> newSibDisc) || newSibDisc < 0 || newSibDisc > 100)
-                {
-                    cout << "Invalid input. Enter a value between 0 and 100: ";
-                    clearInputBuffer();
-                }
-                clearInputBuffer();
-
-                setScholarshipCriteria(newMin, newSchoDisc / 100.0, newSibDisc / 100.0);
-                break;
             }
-            case 2:
+            clearInputBuffer();
+
+            cout << "Enter scholarship discount percentage (0-100): ";
+            while (!(cin >> newSchoDisc) || newSchoDisc < 0 || newSchoDisc > 100)
             {
-                string id = readNonEmptyLine("Enter Student ID to review: ");
-                approveScholarshipApplication(scholarships, id);
-                break;
+                cout << "Invalid input. Enter a value between 0 and 100: ";
+                clearInputBuffer();
             }
-            case 3:
+            clearInputBuffer();
+
+            cout << "Enter sibling discount percentage (0-100): ";
+            while (!(cin >> newSibDisc) || newSibDisc < 0 || newSibDisc > 100)
             {
-                string id = readNonEmptyLine("Enter Student ID to update: ");
-                updateScholarshipInformation(scholarships, id);
-                break;
+                cout << "Invalid input. Enter a value between 0 and 100: ";
+                clearInputBuffer();
             }
-            case 4:
-                generateScholarshipReport(scholarships);
-                break;
-            case 0:
-                cout << "Returning to Admin Menu...\n";
-                break;
-            default:
-                cout << "Invalid menu choice. Please try again.\n";
+            clearInputBuffer();
+
+            setScholarshipCriteria(newMin, newSchoDisc / 100.0, newSibDisc / 100.0);
+            break;
+        }
+        case 2:
+        {
+            string id = readNonEmptyLine("Enter Student ID to review: ");
+            approveScholarshipApplication(scholarships, id);
+            break;
+        }
+        case 3:
+        {
+            string id = readNonEmptyLine("Enter Student ID to update: ");
+            updateScholarshipInformation(scholarships, id);
+            break;
+        }
+        case 4:
+            generateScholarshipReport(scholarships);
+            break;
+        case 0:
+            cout << "Returning to Admin Menu...\n";
+            break;
+        default:
+            cout << "Invalid menu choice. Please try again.\n";
         }
     } while (choice != 0);
 }
