@@ -209,21 +209,16 @@ void studentProfileMenu(string loggedID, const vector<Student>& students)
         cout << "1. View Profile\n";
         cout << "0. Return to Student Menu\n";
         cout << "Enter your choice: ";
-        if (!(cin >> subChoice))
-        {
-            cout << "Invalid input.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+
+        subChoice = readMenuChoice(0, 1);
 
         if (subChoice == 1)
         {
             viewProfile(students, loggedID);
         }
-        else if (subChoice != 0)
+        else if (subChoice == 0)
         {
-            cout << "Invalid menu choice.\n";
+            cout << "Returning to Student Menu...\n";
         }
 
     } while (subChoice != 0);
@@ -248,13 +243,7 @@ void adminMenu(vector<Student>& students)
         cout << "0. Logout\n";
         cout << "Enter your choice: ";
 
-        if (!(cin >> choice))
-        {
-            cout << "Invalid input. Please enter a number.\n";
-            clearInputBuffer();
-            continue;
-        }
-        clearInputBuffer();
+        choice = readMenuChoice(0, 5);
 
         switch (choice)
         {
@@ -304,6 +293,47 @@ void adminMenu(vector<Student>& students)
 }
 
 // ================= Helper Functions =================
+int readMenuChoice(int min, int max)
+{
+    string input;
+
+    while (true)
+    {
+        getline(cin, input);
+
+        if (input.empty())
+        {
+            cout << "Input cannot be empty. Please enter a number: ";
+            continue;
+        }
+
+        try
+        {
+            size_t pos;
+            int choice = stoi(input, &pos);
+
+            // Check if there are extra characters
+            if (pos != input.length())
+            {
+                cout << "Invalid input. Please enter a number: ";
+                continue;
+            }
+
+            if (choice < min || choice > max)
+            {
+                cout << "Invalid choice. Please enter a number from "
+                    << min << " to " << max << ": ";
+                continue;
+            }
+
+            return choice;
+        }
+        catch (...)
+        {
+            cout << "Invalid input. Please enter a number: ";
+        }
+    }
+}
 void clearInputBuffer()
 {
     cin.clear();
