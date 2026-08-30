@@ -8,6 +8,7 @@ void extendedMainMenu()
     vector<Scholarship> scholarshipList;
     vector<Schedule> scheduleList;
     vector<ExamResult> examResultList;
+    vector<PaymentRecord> payments;
 
     loadStudentData(students);
     loadSubjectFromFile(subjectList);
@@ -15,6 +16,7 @@ void extendedMainMenu()
     loadScholarshipData(scholarshipList);
     loadScheduleData(scheduleList);
     loadExamResultData(examResultList);
+    loadPaymentsFromFile(payments);
 
     if (subjectList.empty())
     {
@@ -98,8 +100,7 @@ void extendedMainMenu()
                                 break;
 
                             case 4:
-                                // Payment & Reports
-                                cout << "belum siap\n";
+                                studentPaymentMenu(loggedID, subjectList, enrolRecords, payments);
                                 break;
 
                             case 5:
@@ -170,8 +171,7 @@ void extendedMainMenu()
                         break;
 
                     case 4:
-                        // Payment & Reports
-                        cout << "belum siap\n";
+                       adminPaymentMenu(students, subjectList, enrolRecords, scholarships, payments);
                         break;
 
                     case 5:
@@ -199,6 +199,7 @@ void extendedMainMenu()
             saveSubjectToFile(subjectList);
             saveEnrolToFile(enrolRecords);
             saveScholarshipData(scholarshipList);
+            savePaymentsToFile(payments);
             saveScheduleData(scheduleList);
             cout << "Exiting.\n";
         }
