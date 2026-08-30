@@ -192,4 +192,34 @@ void generateScholarshipReport(const vector<Scholarship>& scholarships);
 void studentScholarshipMenu(string studentID, vector<Scholarship>& scholarships);
 void adminScholarshipMenu(vector<Scholarship>& scholarships);
 
+void loadPaymentsFromFile(vector<PaymentRecord>& payments);
+void savePaymentsToFile(const vector<PaymentRecord>& payments);
+
+// Payment Core Operations
+void generateInvoice(string studentID, 
+                     const vector<Subject>& subjects, 
+                     const vector<StudentSubject>& enrolList, 
+                     const vector<Scholarship>& scholarships, 
+                     vector<PaymentRecord>& payments);
+void processPayment(string studentID, vector<PaymentRecord>& payments);
+void viewPaymentHistory(string studentID, const vector<PaymentRecord>& payments);
+
+// Reports & Analytics
+void generateMonthlyIncomeReport(const vector<PaymentRecord>& payments);
+void generateOutstandingReport(const vector<PaymentRecord>& payments);
+void generateStudentStatistics(const vector<Student>& students, 
+                                const vector<Subject>& subjects, 
+                                const vector<StudentSubject>& enrolList);
+
+// Payment Menus
+void studentPaymentMenu(string studentID, 
+                        const vector<Subject>& subjList, 
+                        const vector<StudentSubject>& enrolList, 
+                        vector<PaymentRecord>& payments);
+void adminPaymentMenu(const vector<Student>& students, 
+                      const vector<Subject>& subjList, 
+                      const vector<StudentSubject>& enrolList, 
+                      const vector<Scholarship>& scholarships, 
+                      vector<PaymentRecord>& payments);
+
 #endif
