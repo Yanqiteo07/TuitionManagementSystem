@@ -62,6 +62,15 @@ struct ExamResult {
     char grade;
 };
 
+struct Payment {
+    string invoiceID;
+    string studentID;
+    string date;
+    double amountDue;
+    double amountPaid;
+    double balance;
+    string status; 
+};
 // Student Account & Student Management
 void studentRegister(vector<Student>& students);
 bool studentLogin(vector<Student>& students, string username, string password, string& loggedInID);
@@ -221,5 +230,6 @@ void adminPaymentMenu(const vector<Student>& students,
                       const vector<StudentSubject>& enrolList, 
                       const vector<Scholarship>& scholarships, 
                       vector<PaymentRecord>& payments);
+typedef Payment Invoice;
 
 #endif
