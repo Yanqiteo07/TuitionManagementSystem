@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="TMSystem/TMSystem.vcxproj" Id="8bc22de3-18ef-4f51-99dd-be035b7a8c08" />
+</Solution>

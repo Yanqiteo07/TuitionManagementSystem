@@ -1,0 +1,5 @@
+BM01|Bahasa Melayu|120.00
+ENG01|English|120.00
+SEJ01|Sejarah|110.00
+SCI01|Science|130.00
+MATH01|Mathematics|130.00
